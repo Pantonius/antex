@@ -1,0 +1,60 @@
+% Made by Anton
+% Last update 2025-01-29
+\ProvidesPackage{anton}[2025/01/29 v.01 Anton Pogrebnjak]
+\RequirePackage{tikz}
+\RequirePackage{graphicx}
+
+% FONT
+\usepackage{fontspec}
+\setmainfont{Ubuntu}
+
+% COLORS
+\RequirePackage{xcolor}
+\xdefinecolor{primarycolor}{HTML}{2df598}
+\xdefinecolor{secondarycolor}{HTML}{222021}
+
+% MARK
+%% gives a background color to the section titles
+\RequirePackage{calc}
+\newlength{\markoheight}
+\newlength{\markowidth}
+\newcommand{\marko}[1]{%
+  \settowidth{\markowidth}{#1}%
+  \settoheight{\markoheight}{#1}%
+  \raisebox{-.25\markoheight}{%
+  \begin{tikzpicture}
+    \node[inner sep=.25\markoheight, fill=primarycolor, text=black] at (.5 \markowidth, .5 \markoheight) {#1};
+  \end{tikzpicture}%
+  }%
+}
+
+% TITLE
+\newcommand*{\project}[1]{\gdef\@project{#1}}
+\newcommand*{\@project}{Pretty Project}
+\newcommand*{\logo}[1]{\gdef\@logo{#1}}
+\newcommand*{\@logo}{logo.png}
+\renewcommand*{\maketitle}{%
+  \begin{center}
+    \marko{\Huge\bfseries\@title}\par
+    \Large\@project\par
+    \vspace{1em}
+    \large by \emph{\@author}
+    \tikz\draw[black, line width=.2mm] (0,0) -- (\textwidth,0);\par
+  \end{center}
+}
+
+% PAGE HEADER / FOOTER
+\RequirePackage[includehead, headheight=20mm]{geometry}
+\RequirePackage{a4wide}
+\RequirePackage{fancyhdr}
+\RequirePackage{lastpage}
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0pt}
+\fancyhf{} % clear all header and footer fields
+\fancyhead[R]{\raisebox{-.5\height}{\includegraphics[width=18mm]{\@logo}}} % logo to the right
+\fancyhead[L]{\@project} % project name to the left
+\fancyfoot[C]{\thepage of \pageref{LastPage}} % page number in the center
+
+% SECTIONS
+
+\endinput
