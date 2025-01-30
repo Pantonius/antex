@@ -1,8 +1,7 @@
-\LoadClass{article}
+\LoadClass[a4paper, twoside]{article}
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{recipe}[2025/01/29 Recipe class v0.1]
 
-\RequirePackage[a4paper]{geometry}
 \RequirePackage{graphicx}
 \RequirePackage{tikz}
 
@@ -25,11 +24,12 @@
 \renewcommand*{\maketitle}{%
   \begin{titlepage}
     \begin{center}
-      \Huge \textbf{\@title} \\[1mm]
-      \Large \textbf{\@subtitle} \\[1cm]
-      \includegraphics[width=0.3\textwidth]{logo.png}
-
       \begin{tikzpicture}[overlay, remember picture]
+	\node at (current page.north) [yshift=-8cm] {\Huge \textbf{\@title}};
+	\node at (current page.north) [yshift=-9cm] {\Large \textbf{\@subtitle}};
+	\node at (current page.north) [yshift=-11cm] {\includegraphics[width=0.3\textwidth]{logo.png}};
+
+	% Yellow box
 	\draw[fill=primarycolor, draw=primarycolor] (current page.south west) -- +(\paperwidth,0) -- +(\paperwidth, 10cm) -- +(.8\paperwidth, 9cm) -- +(0.3\paperwidth, 10cm) -- +(0, 9cm) -- cycle;
 
 	% Text within the box
@@ -42,5 +42,18 @@
   \end{titlepage}%
 }
 
+% HEADER / FOOTER
+\RequirePackage{fancyhdr}
+\RequirePackage{lastpage}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyhead[LE,RO]{\@title}
+\fancyfoot[C]{\thepage{} von \pageref{LastPage}}
+
 % TABLE OF CONTENTS
 \renewcommand*{\contentsname}{Inhaltsverzeichnis}
+\setcounter{tocdepth}{2}
+
+% SECTION
+\setcounter{secnumdepth}{0} % no numbering
